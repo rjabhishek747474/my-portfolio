@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Warm Minimal Theme */
+:root {
+  --background: #f5f5f0;
+  --background-secondary: #ffffff;
+  --foreground: #1a1a1a;
+  --foreground-muted: #4a4a4a;
+  --accent: #c9a76c;
+  --border: #e5e5e0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: 'rlig' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(201, 167, 108, 0.2);
+  color: inherit;
+}
+
+/* Scrollbar - minimal styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d5d5d0;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c5c5c0;
+}
+
+/* Card styles */
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl border border-border p-5 shadow-card;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .card:hover {
+    @apply shadow-card-hover;
+  }
+
+  .card-section {
+    @apply bg-white rounded-2xl border border-border overflow-hidden;
+  }
+
+  /* Accordion section header */
+  .section-header {
+    @apply flex items-center justify-between p-5 cursor-pointer select-none;
+    transition: background-color 0.15s ease;
+  }
+
+  .section-header:hover {
+    @apply bg-background-tertiary;
+  }
+
+  /* Colored left border for sections */
+  .border-accent-purple {
+    border-left: 3px solid #8b7cf6;
+  }
+
+  .border-accent-blue {
+    border-left: 3px solid #6bb3e8;
+  }
+
+  .border-accent-green {
+    border-left: 3px solid #7dd3a8;
+  }
+
+  .border-accent-orange {
+    border-left: 3px solid #f5a855;
+  }
+
+  .border-accent-pink {
+    border-left: 3px solid #e891b0;
+  }
+
+  .border-accent-teal {
+    border-left: 3px solid #5ebdbd;
+  }
+
+  /* Count badge */
+  .count-badge {
+    @apply inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-medium;
+  }
+
+  .count-badge-purple {
+    @apply bg-purple-100 text-purple-600;
+  }
+
+  .count-badge-blue {
+    @apply bg-blue-100 text-blue-600;
+  }
+
+  .count-badge-green {
+    @apply bg-green-100 text-green-600;
+  }
+
+  .count-badge-orange {
+    @apply bg-orange-100 text-orange-600;
+  }
+
+  .count-badge-pink {
+    @apply bg-pink-100 text-pink-600;
+  }
+
+  .count-badge-teal {
+    @apply bg-teal-100 text-teal-600;
+  }
+
+  /* Icon container */
+  .icon-box {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center;
+  }
+
+  .icon-box-green {
+    @apply bg-green-100 text-green-600;
+  }
+
+  .icon-box-blue {
+    @apply bg-blue-100 text-blue-600;
+  }
+
+  .icon-box-purple {
+    @apply bg-purple-100 text-purple-600;
+  }
+
+  .icon-box-orange {
+    @apply bg-orange-100 text-orange-600;
+  }
+
+  /* Link style */
+  .link-arrow {
+    @apply text-accent font-medium inline-flex items-center gap-1 hover:underline;
+  }
+
+  /* Profile avatar */
+  .avatar-ring {
+    @apply rounded-full border-4 border-accent/20;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Sidebar layout */
+  .layout-sidebar {
+    @apply fixed left-0 top-0 h-screen w-72 bg-background-sidebar border-r border-border p-6 overflow-y-auto;
+  }
+
+  .layout-main {
+    @apply ml-72 min-h-screen p-8;
+  }
+
+  @media (max-width: 1024px) {
+    .layout-sidebar {
+      @apply relative w-full h-auto border-r-0 border-b;
+    }
+
+    .layout-main {
+      @apply ml-0;
+    }
+  }
+}
+
+/* Animation for accordion content */
+.accordion-content {
+  overflow: hidden;
+}
+
+.accordion-content[data-state='open'] {
+  animation: accordionDown 0.2s ease-out;
+}
+
+.accordion-content[data-state='closed'] {
+  animation: accordionUp 0.2s ease-out;
+}
+
+@keyframes accordionDown {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+
+  to {
+    height: var(--accordion-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordionUp {
+  from {
+    height: var(--accordion-height);
+    opacity: 1;
+  }
+
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}

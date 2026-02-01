@@ -1,0 +1,63 @@
+{
+    "profile": {
+        "name": "Aishwarya Jaiswal",
+        "title": "Product Manager 2",
+        "company": "Microsoft (Azure Marketplaces)",
+        "tagline": "Curious being who loves experimenting & shipping things.",
+        "bio": "Product Manager with experience building SaaS products in cloud infrastructure for both B2B and B2C users. Also worked as a Product & Growth Consultant for 6 startups, leading and scaling multiple 0→1 product builds in the B2C domain.",
+        "email": "hello@example.com",
+        "linkedinUrl": "https://linkedin.com",
+        "resumeUrl": "/resume.pdf"
+    },
+    "workExperience": [
+        {
+            "title": "Product Manager 2",
+            "company": "Microsoft",
+            "period": "2022 – Present",
+            "description": "Azure Marketplaces – driving cloud infrastructure products for B2B customers.",
+            "color": "#9333ea"
+        },
+        {
+            "title": "Product & Growth Consultant",
+            "company": "Various Startups",
+            "period": "2020 – 2022",
+            "description": "Led 0→1 product builds across 6 startups in the B2C domain.",
+            "color": "#3b82f6"
+        }
+    ],
+    "caseStudies": [
+        {
+            "title": "Azure Marketplace Redesign",
+            "description": "Improved discoverability and conversion rates by 40%",
+            "tags": [
+                "Enterprise",
+                "SaaS",
+                "Cloud"
+            ],
+            "color": "#22c55e"
+        }
+    ],
+    "freelanceProjects": [
+        {
+            "title": "E-commerce Growth Strategy",
+            "client": "Fashion Startup",
+            "description": "Increased user retention by 35% through gamification features",
+            "color": "#f97316"
+        }
+    ],
+    "recognition": [
+        {
+            "title": "Excellence Award",
+            "organization": "Microsoft",
+            "year": "2023",
+            "color": "#ec4899"
+        }
+    ],
+    "outsideWork": [
+        {
+            "title": "AI Side Projects",
+            "description": "Building ML-powered tools for personal productivity",
+            "color": "#14b8a6"
+        }
+    ]
+}
