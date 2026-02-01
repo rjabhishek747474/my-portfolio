@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import fs from 'fs'
-import path from 'path'
+import { portfolioData } from '@/data/portfolio'
 
-const DATA_FILE = path.join(process.cwd(), 'src/data/portfolio.json')
+// In-memory storage for runtime updates (resets on cold start)
+let runtimeData = { ...portfolioData }
 
 // GET /api/portfolio - Get portfolio data (public)
 export async function GET() {
     try {
-        const data = fs.readFileSync(DATA_FILE, 'utf-8')
-        return NextResponse.json(JSON.parse(data))
+        return NextResponse.json(runtimeData)
     } catch (error) {
         console.error('Error reading portfolio data:', error)
         return NextResponse.json(
@@ -34,10 +33,13 @@ export async function PUT(request: NextRequest) {
 
         const body = await request.json()
 
-        // Write to file
-        fs.writeFileSync(DATA_FILE, JSON.stringify(body, null, 2), 'utf-8')
+        // Update in-memory data
+        runtimeData = { ...runtimeData, ...body }
 
-        return NextResponse.json({ success: true, message: 'Portfolio updated!' })
+        return NextResponse.json({
+            success: true,
+            message: 'Portfolio updated! Note: Changes persist until next deployment.'
+        })
     } catch (error) {
         console.error('Error updating portfolio data:', error)
         return NextResponse.json(
