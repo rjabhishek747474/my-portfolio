@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { portfolioData } from '@/data/portfolio'
+import fs from 'fs/promises'
+import path from 'path'
 
-// In-memory storage for runtime updates (resets on cold start)
-let runtimeData = { ...portfolioData }
+// Path to the JSON data file
+const dataFilePath = path.join(process.cwd(), 'src/data/portfolio.json')
 
 // GET /api/portfolio - Get portfolio data (public)
 export async function GET() {
     try {
-        return NextResponse.json(runtimeData)
+        // Read data directly from the file system
+        const fileContents = await fs.readFile(dataFilePath, 'utf8')
+        const data = JSON.parse(fileContents)
+
+        return NextResponse.json(data)
     } catch (error) {
         console.error('Error reading portfolio data:', error)
         return NextResponse.json(
@@ -33,12 +38,26 @@ export async function PUT(request: NextRequest) {
 
         const body = await request.json()
 
-        // Update in-memory data
-        runtimeData = { ...runtimeData, ...body }
+        // Read existing data first to ensure we merge correctly
+        // (though arguably we could just overwrite if the frontend sends the whole state, 
+        // but merging is safer if the frontend sends partial updates)
+        let currentData = {}
+        try {
+            const fileContents = await fs.readFile(dataFilePath, 'utf8')
+            currentData = JSON.parse(fileContents)
+        } catch (readError) {
+            console.warn('Could not read existing data file, starting with empty object', readError)
+        }
+
+        // Merge new data with existing data
+        const updatedData = { ...currentData, ...body }
+
+        // Write updated data back to the file
+        await fs.writeFile(dataFilePath, JSON.stringify(updatedData, null, 4), 'utf8')
 
         return NextResponse.json({
             success: true,
-            message: 'Portfolio updated! Note: Changes persist until next deployment.'
+            message: 'Portfolio updated! Changes saved to disk.'
         })
     } catch (error) {
         console.error('Error updating portfolio data:', error)
